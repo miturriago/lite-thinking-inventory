@@ -1,0 +1,40 @@
+org: devlovelace
+app: lite-thinking-inventory
+service: lite-thinking-inventory
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  timeout: 180
+  memorySize: 256
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - cognito-idp:AdminInitiateAuth
+        - cognito-idp:AdminCreateUser
+        - cognito-idp:AdminSetUserPassword
+      Resource: "*"
+
+    - Effect: "Allow"
+      Action:
+        - dynamodb:GetItem
+        - dynamodb:Query
+        - dynamodb:PutItem
+        - dynamodb:Scan
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:us-east-1:523199501603:table/lite-thinking-dev"
+
+functions:
+  createCompany:
+    handler: index.handler
+    timeout: 180
+    memorySize: 256
+    events:
+      - http:
+          path: inventory
+          method: post
+          cors: true # <-- CORS!
+
