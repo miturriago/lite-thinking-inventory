@@ -22,12 +22,13 @@ module.exports.putItem = async (db_item, table_name) => {
   return result;
 };
 
-module.exports.scan = async (table_name) => {
+module.exports.scan = async (nit, table_name) => {
   let params = {
     TableName: table_name,
-    KeyConditionExpression: "PK = :PK",
+    KeyConditionExpression: "PK = :PK and  begins_with(SK, :SK)",
     ExpressionAttributeValues: {
       ":PK": "#INVENTORIES",
+      ":SK": "#INVENTORY#" + nit,
     },
   };
   return new Promise((resolve, reject) => {
