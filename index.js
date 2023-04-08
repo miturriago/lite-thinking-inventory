@@ -4,7 +4,9 @@ const dynamoDb = require("./services/dynamo.service");
 const ajvO = require("ajv");
 const ajvRq = new ajvO();
 const schemaCreateInventoryRq = require("./schemas/rqCreateInventorySchema.json");
+const schemaGetInventoriesRq = require("./schemas/rqGetInventoriesSchema.json");
 
+const validateGetRq = ajvRq.compile(schemaGetInventoriesRq);
 const validateCreateRq = ajvRq.compile(schemaCreateInventoryRq);
 
 module.exports.createInventony = async (event) => {
@@ -61,5 +63,51 @@ module.exports.createInventony = async (event) => {
       "Access-Control-Allow-Credentials": true,
     },
     body: JSON.stringify({ message: "success", payload }),
+  };
+};
+
+module.exports.getInventories = async (event) => {
+  const data = JSON.parse(event.body);
+  let valid = validateGetRq(data);
+
+  if (!valid) {
+    return {
+      statusCode: 406,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true,
+      },
+      body: JSON.stringify({
+        message: "Empty fields are not accepted",
+        details: validateGetRq.errors[0],
+      }),
+    };
+  }
+  const { nit } = data;
+
+  let resultRequest = {};
+
+  try {
+    resultRequest = await dynamoDb.scan(
+      nit,
+      process.env.TABLE_NAME + "-" + process.env.STAGE
+    );
+  } catch (error) {
+    console.log("Error get users: ", error);
+    return {
+      statusCode: 400,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true,
+      },
+    };
+  }
+  return {
+    statusCode: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify(resultRequest),
   };
 };
