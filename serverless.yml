@@ -58,3 +58,13 @@ functions:
           method: post
           cors: true # <-- CORS!
 
+  deleteInventory:
+    handler: index.deleteInventory
+    timeout: 180
+    memorySize: 256
+    events:
+      - http:
+          path: deleteInventory
+          method: post
+          cors: true # <-- CORS!
+
