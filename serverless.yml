@@ -37,6 +37,10 @@ functions:
           path: inventory
           method: post
           cors: true # <-- CORS!
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: arn:aws:cognito-idp:us-east-1:523199501603:userpool/us-east-1_152dyJXwj
 
   getInventories:
     handler: index.getInventories
@@ -47,6 +51,10 @@ functions:
           path: getInventories
           method: post
           cors: true # <-- CORS!
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: arn:aws:cognito-idp:us-east-1:523199501603:userpool/us-east-1_152dyJXwj
 
   getInventory:
     handler: index.getInventory
@@ -57,6 +65,10 @@ functions:
           path: getInventory
           method: post
           cors: true # <-- CORS!
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: arn:aws:cognito-idp:us-east-1:523199501603:userpool/us-east-1_152dyJXwj
 
   deleteInventory:
     handler: index.deleteInventory
@@ -67,4 +79,8 @@ functions:
           path: deleteInventory
           method: post
           cors: true # <-- CORS!
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: arn:aws:cognito-idp:us-east-1:523199501603:userpool/us-east-1_152dyJXwj
 
