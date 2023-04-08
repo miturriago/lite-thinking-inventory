@@ -29,7 +29,7 @@ provider:
 
 functions:
   createCompany:
-    handler: index.handler
+    handler: index.createInventony
     timeout: 180
     memorySize: 256
     events:
@@ -37,4 +37,50 @@ functions:
           path: inventory
           method: post
           cors: true # <-- CORS!
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: arn:aws:cognito-idp:us-east-1:523199501603:userpool/us-east-1_152dyJXwj
+
+  getInventories:
+    handler: index.getInventories
+    timeout: 180
+    memorySize: 256
+    events:
+      - http:
+          path: getInventories
+          method: post
+          cors: true # <-- CORS!
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: arn:aws:cognito-idp:us-east-1:523199501603:userpool/us-east-1_152dyJXwj
+
+  getInventory:
+    handler: index.getInventory
+    timeout: 180
+    memorySize: 256
+    events:
+      - http:
+          path: getInventory
+          method: post
+          cors: true # <-- CORS!
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: arn:aws:cognito-idp:us-east-1:523199501603:userpool/us-east-1_152dyJXwj
+
+  deleteInventory:
+    handler: index.deleteInventory
+    timeout: 180
+    memorySize: 256
+    events:
+      - http:
+          path: deleteInventory
+          method: post
+          cors: true # <-- CORS!
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: arn:aws:cognito-idp:us-east-1:523199501603:userpool/us-east-1_152dyJXwj
 
