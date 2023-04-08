@@ -61,3 +61,22 @@ module.exports.scanItem = async (db_item, table_name) => {
     });
   });
 };
+
+module.exports.deleteItem = async (db_item, table_name) => {
+  let params = {
+    TableName: table_name,
+    Key: {
+      PK: db_item.PK,
+      SK: db_item.SK,
+    },
+  };
+  return new Promise((resolve, reject) => {
+    docClient.delete(params, function (err, data) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(data);
+      }
+    });
+  });
+};
