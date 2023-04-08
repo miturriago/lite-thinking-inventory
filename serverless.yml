@@ -37,7 +37,7 @@ functions:
           path: inventory
           method: post
           cors: true # <-- CORS!
-  
+
   getInventories:
     handler: index.getInventories
     timeout: 180
@@ -47,5 +47,14 @@ functions:
           path: getInventories
           method: post
           cors: true # <-- CORS!
-  
+
+  getInventory:
+    handler: index.getInventory
+    timeout: 180
+    memorySize: 256
+    events:
+      - http:
+          path: getInventory
+          method: post
+          cors: true # <-- CORS!
 
