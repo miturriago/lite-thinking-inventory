@@ -29,7 +29,7 @@ provider:
 
 functions:
   createCompany:
-    handler: index.handler
+    handler: index.createInventony
     timeout: 180
     memorySize: 256
     events:
