@@ -5,7 +5,9 @@ const ajvO = require("ajv");
 const ajvRq = new ajvO();
 const schemaCreateInventoryRq = require("./schemas/rqCreateInventorySchema.json");
 const schemaGetInventoriesRq = require("./schemas/rqGetInventoriesSchema.json");
+const schemaGetInventoryRq = require("./schemas/rqGetInventorySchema.json");
 
+const validateGetOneRq = ajvRq.compile(schemaGetInventoryRq);
 const validateGetRq = ajvRq.compile(schemaGetInventoriesRq);
 const validateCreateRq = ajvRq.compile(schemaCreateInventoryRq);
 
@@ -100,6 +102,51 @@ module.exports.getInventories = async (event) => {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Credentials": true,
       },
+    };
+  }
+  return {
+    statusCode: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify(resultRequest),
+  };
+};
+
+module.exports.getInventory = async (event) => {
+  const data = JSON.parse(event.body);
+  let valid = validateGetOneRq(data);
+  if (!valid) {
+    return {
+      statusCode: 406,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true,
+      },
+      body: JSON.stringify({
+        message: "Empty fields are not accepted",
+        details: validateGetRq.errors[0],
+      }),
+    };
+  }
+
+  const { nit, fullName } = data;
+  let resultRequest;
+  try {
+    resultRequest = await dynamoDb.scanItem(
+      { nit, fullName },
+      process.env.TABLE_NAME + "-" + process.env.STAGE
+    );
+  } catch (error) {
+    console.log("Error create: ", error);
+    return {
+      statusCode: 400,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true,
+      },
+      error: JSON.stringify(error),
     };
   }
   return {
