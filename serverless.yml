@@ -40,7 +40,7 @@ functions:
           authorizer:
             name: PrivateAuthorizer
             type: COGNITO_USER_POOLS
-            arn: arn:aws:cognito-idp:us-east-1:523199501603:userpool/us-east-1_152dyJXwj
+            arn: arn:aws:cognito-idp:us-east-1:523199501603:userpool/us-east-1_r1lF9tymk
 
   getInventories:
     handler: index.getInventories
@@ -54,7 +54,7 @@ functions:
           authorizer:
             name: PrivateAuthorizer
             type: COGNITO_USER_POOLS
-            arn: arn:aws:cognito-idp:us-east-1:523199501603:userpool/us-east-1_152dyJXwj
+            arn: arn:aws:cognito-idp:us-east-1:523199501603:userpool/us-east-1_r1lF9tymk
 
   getInventory:
     handler: index.getInventory
@@ -68,7 +68,7 @@ functions:
           authorizer:
             name: PrivateAuthorizer
             type: COGNITO_USER_POOLS
-            arn: arn:aws:cognito-idp:us-east-1:523199501603:userpool/us-east-1_152dyJXwj
+            arn: arn:aws:cognito-idp:us-east-1:523199501603:userpool/us-east-1_r1lF9tymk
 
   deleteInventory:
     handler: index.deleteInventory
@@ -82,5 +82,5 @@ functions:
           authorizer:
             name: PrivateAuthorizer
             type: COGNITO_USER_POOLS
-            arn: arn:aws:cognito-idp:us-east-1:523199501603:userpool/us-east-1_152dyJXwj
+            arn: arn:aws:cognito-idp:us-east-1:523199501603:userpool/us-east-1_r1lF9tymk
 
